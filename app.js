@@ -1,17 +1,21 @@
 let zoom = document.querySelector('.zoom');
-zoom.addEventListener('mousemove', (e) => {
-    zoom.style.setProperty('--zoom-show', 1);
-    //  lấy lần lược vị trí x,y theo đơn vị px
-    let positionPx = e.x - zoom.getBoundingClientRect().left;
-    let positionPy = e.y - zoom.getBoundingClientRect().top;
-    //  chuyển đổi sang đơn vị % 
-    let positionX = 100 * positionPx / zoom.offsetWidth;
-    let positionY = 100 * positionPy / zoom.offsetHeight;
-    // gán vào biến
-    zoom.style.setProperty('--zoom-x', positionX + '%');
-    zoom.style.setProperty('--zoom-y', positionY + '%');
+let imgZoom = document.getElementById('imgZoom');
+
+zoom.addEventListener('mousemove', (event)=>{
+    imgZoom.style.opacity = 1;
+    let positionPx = event.x - zoom.getBoundingClientRect().left;
+    let positionX = (positionPx / zoom.offsetWidth) * 100;
+
+    let positionPy = event.y - zoom.getBoundingClientRect().top;
+    let positionY = (positionPy / zoom.offsetHeight) * 100;
+
+    imgZoom.style.setProperty('--zoom-x', positionX + '%');
+    imgZoom.style.setProperty('--zoom-y', positionY + '%');
+
+    let transformX = -(positionX - 50) / 3.5;
+    let transformY = - (positionY - 50) / 3.5;
+    imgZoom.style.transform = `scale(1.5) translateX(${transformX}%) translateY(${transformY}%)`;
 })
 zoom.addEventListener('mouseout', ()=>{
-    zoom.style.setProperty('--zoom-show', 0);
+    imgZoom.style.opacity = 0;
 })
-// <!-- code from youtube Lun Dev -->
